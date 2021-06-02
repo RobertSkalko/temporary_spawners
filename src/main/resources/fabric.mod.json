@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "temporary_spawners",
+  "version": "1.1.0",
+  "name": "Temporar Spawners",
+  "description": "Stops infinite spawner farming.",
+  "authors": [
+    "mcrobertx22"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/temporary-spawners",
+    "sources": ""
+  },
+  "license": "",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.robertx22.temporary_spawners.main.CommonInit"
+    ],
+    "client": [
+      "com.robertx22.temporary_spawners.main.ClientInit"
+    ],
+    "cardinal-components-block": [
+      "com.robertx22.temporary_spawners.main.ComponentInit"
+    ],
+    "modmenu": [
+      "com.robertx22.temporary_spawners.main.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "temporary_spawners.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=1.16.2",
+    "fabricloader": ">=0.9.0",
+    "fabric": ">=0.15.0",
+    "library_of_exile": ">=1.0.5",
+    "cloth-config2": "*",
+    "autoconfig1u": "*",
+    "cardinal-components-base": ">=2.8.0",
+    "cardinal-components-entity": ">=2.8.0",
+    "cardinal-components-block": ">=2.8.0",
+    "cardinal-components-world": ">=2.8.0"
+  },
+  "suggests": {
+    "age_of_exile": "*"
+  },
+  "custom": {
+    "cardinal-components": [
+      "temporary_spawners:spawner"
+    ]
+  }
+}
