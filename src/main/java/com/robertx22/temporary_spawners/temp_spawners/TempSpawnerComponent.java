@@ -6,7 +6,7 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TntBlock;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 
 public class TempSpawnerComponent implements BlockComponent, AutoSyncedComponent {
@@ -55,13 +55,13 @@ public class TempSpawnerComponent implements BlockComponent, AutoSyncedComponent
     }
 
     @Override
-    public void readFromNbt(CompoundTag tag) {
+    public void readFromNbt(NbtCompound tag) {
         ticksNearPlayer = tag.getInt("ticks");
         cooldownTicks = tag.getInt("cd");
     }
 
     @Override
-    public void writeToNbt(CompoundTag tag) {
+    public void writeToNbt(NbtCompound tag) {
         tag.putInt("ticks", ticksNearPlayer);
         tag.putInt("cd", cooldownTicks);
     }

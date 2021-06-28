@@ -1,2 +1,4 @@
-v.1.1.0
-* 1.16 port.
+v.1.1.1
+
+* Updated fapi and mappings
+* No longer relies on library of exile
