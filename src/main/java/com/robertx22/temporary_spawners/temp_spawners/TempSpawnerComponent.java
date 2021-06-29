@@ -1,7 +1,7 @@
 package com.robertx22.temporary_spawners.temp_spawners;
 
 import com.robertx22.temporary_spawners.configs.TempSpawnersConfig;
-import dev.onyxstudios.cca.api.v3.block.BlockComponent;
+import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TntBlock;
@@ -9,7 +9,7 @@ import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 
-public class TempSpawnerComponent implements BlockComponent, AutoSyncedComponent {
+public class TempSpawnerComponent implements Component, AutoSyncedComponent {
 
     public int ticksNearPlayer = 0;
 

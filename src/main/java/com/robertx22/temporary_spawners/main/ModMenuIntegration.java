@@ -13,10 +13,7 @@ public class ModMenuIntegration implements ModMenuApi {
             return AutoConfig.getConfigScreen(TempSpawnersConfig.class, screen)
                 .get();
         };
+
     }
 
-    @Override
-    public String getModId() {
-        return "temporary_spawners";
-    }
 }
