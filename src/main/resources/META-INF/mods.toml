@@ -1,0 +1,28 @@
+modLoader="javafml" #mandatory
+loaderVersion="[36,)"
+license="All rights reserved"
+issueTrackerURL="https://github.com/RobertSkalko/temporary_spawners/issues"
+[[mods]]
+modId="temporary_spawners"
+version="${file.jarVersion}"
+displayName="Temporary Spawners"
+#updateJSONURL="https://change.me.example.invalid/updates.json"
+#displayURL="https://www.curseforge.com/minecraft/mc-mods/temporary-spawners"
+logoFile="icon.png"
+credits=""
+authors="mcrobertx22"
+description='''
+Random quest mod themed around gods.
+'''
+[[dependencies.temporary_spawners]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.temporary_spawners]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"

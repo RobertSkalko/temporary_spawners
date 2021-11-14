@@ -1,17 +1,29 @@
 package com.robertx22.temporary_spawners.main;
 
-import com.robertx22.temporary_spawners.configs.TempSpawnersConfig;
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
-import net.fabricmc.api.ModInitializer;
+import com.robertx22.temporary_spawners.configs.TemporarySpawnersConfig;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-public class CommonInit implements ModInitializer {
+@Mod("temporary_spawners")
+public class CommonInit {
 
-    @Override
-    public void onInitialize() {
-        AutoConfig.register(TempSpawnersConfig.class, JanksonConfigSerializer::new);
+    public CommonInit() {
+
+        ModLoadingContext.get()
+            .registerConfig(ModConfig.Type.COMMON, TemporarySpawnersConfig.spec);
+        final IEventBus bus = FMLJavaModLoadingContext.get()
+            .getModEventBus();
+
+        bus.addListener(this::commonSetupEvent);
 
         System.out.println("Temporary Spawners loaded.");
     }
 
+    public void commonSetupEvent(FMLCommonSetupEvent event) {
+        ComponentInit.reg();
+    }
 }

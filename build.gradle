@@ -1,99 +1,122 @@
-plugins {
-    id 'fabric-loom' version '0.8-SNAPSHOT'
-    id 'maven-publish'
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+		classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+    }
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+}
+apply plugin: 'net.minecraftforge.gradle'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
 repositories {
-    maven { url = 'https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master' }
-    maven { url "https://maven.theillusivec4.top" }
-    maven { url 'https://dl.bintray.com/ladysnake/libs' }
-    maven { url 'https://ladysnake.jfrog.io/artifactory/mods' }
-    maven { url 'https://maven.terraformersmc.com/releases' }
-    maven { url 'https://maven.blamejared.com' }
-    maven { url "https://maven.siphalor.de" }
-    maven { url "https://maven.shedaniel.me" }
-    maven { url "https://dl.bintray.com/kyrptonaught/customportalapi" }
-}
-
-dependencies {
-
-    //Base
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-
-    //APIs
-    dependAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_version}")
-	dependAndInclude("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:${cardinal_version}")
-  	
-	dependAndInclude("me.shedaniel.cloth:cloth-config-fabric:${config_api_version}")	
-    dependAndInclude("me.sargunvohra.mcmods:autoconfig1u:${auto_config_version}")
-	
-	modApi("com.terraformersmc:modmenu:${mod_menu_version}")
 
 }
 
-def dependAndInclude(str) {
-    dependencies.modApi(str) {
-        exclude(group: "net.fabricmc")
-        exclude(group: "net.fabricmc.fabric-api")
-        exclude(group: "io.github.prospector")
-        exclude(module: "config-2")
-    }
-    dependencies.include(str) {
-        exclude(group: "net.fabricmc")
-        exclude(group: "net.fabricmc.fabric-api")
-        exclude(group: "io.github.prospector")
-        exclude(module: "config-2")
-    }
-}
+minecraft {
 
 
-processResources {
-    inputs.property "version", project.version
+    mappings channel: 'official', version: "$project.minecraft_version"
 
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-sourceSets {
-    main {
-        resources {
-            srcDirs += project.file("src/generated/resources")
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+			arg "-mixin.config=${mod_id}-mixins.json"
+                  // This makes dependencies with mixins work
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+			arg "-mixin.config=${mod_id}-mixins.json"
+                  // This makes dependencies with mixins work
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+			arg "-mixin.config=${mod_id}-mixins.json"
+                  // This makes dependencies with mixins work
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
         }
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    // ensure that the encoding is set to UTF-8, no matter what the system default is
-    // this fixes some edge cases with special characters not displaying correctly
-    // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-    // If Javadoc is generated, this must be specified in that task too.
-    it.options.encoding = "UTF-8"
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-    // The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-    // JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-    // We'll use that if it's available, but otherwise we'll use the older option.
-    def targetVersion = 8
-    if (JavaVersion.current().isJava9Compatible()) {
-        it.options.release = targetVersion
-    }
+
+dependencies {
+
+
+    minecraft([
+            group  : "net.minecraftforge",
+            name   : 'forge',
+            version: "$project.minecraft_version-${project.forgeversion}"
+    ])    
+	
+	//annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
+	
+	if (System.getProperty("idea.sync.active") != "true") {
+	annotationProcessor 'org.spongepowered:mixin:0.8.3:processor' 
+	}
+
 }
 
 
 jar {
-    from "LICENSE"
+    manifest {
+        attributes([
+                "MixinConnector": "com.robertx22.temporary_spawners.main.MixinConnector",
+                "MixinConfigs"  : "temporary_spawners-mixins.json"
+        ])
+    }
 }
 
 // CURSEFORGE STUFF
@@ -111,20 +134,18 @@ curseforge {
         changelogType = 'text'
         changelog = file('CHANGELOG.txt')
         addGameVersion("${project.minecraft_version}")
-        addGameVersion("Fabric")
-        addGameVersion("Java 16")
+        addGameVersion("Forge")
+        addGameVersion("Java 8")
 
-        relations {
-            requiredDependency 'fabric-api'
-        }
-        mainArtifact(remapJar)
-
-        afterEvaluate {
-            uploadTask.dependsOn("remapJar")
-        }
+        mainArtifact(jar)       
     }
     options {
-        forgeGradleIntegration = false
+        forgeGradleIntegration = true
     }
+}
+
+apply plugin: 'org.spongepowered.mixin'
+mixin {
+    add sourceSets.main, "${mod_id}-refmap.json"
 }
 

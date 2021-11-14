@@ -1,4 +1,11 @@
-v.1.1.1
 
-* Updated fapi and mappings
-* No longer relies on library of exile
+v.1.4.1
+
+should fix the crash
+
+
+v.1.4.0
+
+Now on forge.
+
+Added particle effect for when the spawner is cooling down (hearts seem best)
