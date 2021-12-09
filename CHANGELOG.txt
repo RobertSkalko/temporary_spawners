@@ -1,11 +1,2 @@
-
-v.1.4.1
-
-should fix the crash
-
-
-v.1.4.0
-
-Now on forge.
-
-Added particle effect for when the spawner is cooling down (hearts seem best)
+v.1.4.3
+fix perma on cd bug

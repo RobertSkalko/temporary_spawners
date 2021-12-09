@@ -5,17 +5,17 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class TemporarySpawnersConfig {
 
-    public static final ForgeConfigSpec spec;
-    public static final TemporarySpawnersConfig COMMON;
+    public static final ForgeConfigSpec SPEC;
+    public static final TemporarySpawnersConfig CONFIG;
 
     static {
         final Pair<TemporarySpawnersConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(TemporarySpawnersConfig::new);
-        spec = specPair.getRight();
-        COMMON = specPair.getLeft();
+        SPEC = specPair.getRight();
+        CONFIG = specPair.getLeft();
     }
 
     public static TemporarySpawnersConfig get() {
-        return COMMON;
+        return CONFIG;
     }
 
     TemporarySpawnersConfig(ForgeConfigSpec.Builder b) {

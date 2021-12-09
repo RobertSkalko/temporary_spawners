@@ -14,7 +14,7 @@ public class CommonInit {
     public CommonInit() {
 
         ModLoadingContext.get()
-            .registerConfig(ModConfig.Type.COMMON, TemporarySpawnersConfig.spec);
+            .registerConfig(ModConfig.Type.SERVER, TemporarySpawnersConfig.SPEC);
         final IEventBus bus = FMLJavaModLoadingContext.get()
             .getModEventBus();
 

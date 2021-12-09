@@ -65,14 +65,11 @@ public class TempSpawnerComponent implements ICommonCap {
             ticksNearPlayer++;
 
             if (ticksNearPlayer > TemporarySpawnersConfig.get().SPAWNER_LIFETIME_MINUTES.get() * 20 * 60) {
+                ticksNearPlayer = 0;
 
                 if (TemporarySpawnersConfig.get().ENABLE_SPAWNER_DESTRUCTION.get()) {
-
                     spawner.getLevel()
                         .destroyBlock(spawner.getBlockPos(), false);
-                    //    .setBlock(spawner.getBlockPos(), Blocks.AIR.defaultBlockState(), 0);
-                    //    BlockPos p = spawner.getPos();
-
                 } else {
                     cooldownTicks = TemporarySpawnersConfig.get().SPAWNER_COOLDOWN_MINUTES.get() * 20 * 60;
                 }
