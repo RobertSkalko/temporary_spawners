@@ -20,7 +20,6 @@ public abstract class MobSpawnerLogicMixin {
     @Inject(method = "serverTick", at = @At(value = "HEAD"), cancellable = true)
     public void hookOnServerTick(ServerLevel level, BlockPos pos, CallbackInfo ci) {
         BaseSpawner spawner = (BaseSpawner) (Object) this;
-
         try {
             MixinMethod.hookOnServerTick(level, pos, spawner, ci, isNearPlayer(level, pos));
         } catch (Exception e) {

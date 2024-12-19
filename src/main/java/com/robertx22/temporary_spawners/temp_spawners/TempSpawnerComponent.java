@@ -1,6 +1,5 @@
 package com.robertx22.temporary_spawners.temp_spawners;
 
-import com.robertx22.library_of_exile.components.ICap;
 import com.robertx22.temporary_spawners.configs.TemporarySpawnersConfig;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -12,13 +11,14 @@ import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Mod.EventBusSubscriber
-public class TempSpawnerComponent implements ICap {
+public class TempSpawnerComponent implements ICapabilitySerializable<CompoundTag> {
 
 
     public static final ResourceLocation RESOURCE = new ResourceLocation("temporary_spawners", "spawner_data");
@@ -105,11 +105,5 @@ public class TempSpawnerComponent implements ICap {
         ticksNearPlayer = nbt.getInt("ticks");
         cooldownTicks = nbt.getInt("cd");
     }
-
-    @Override
-    public String getCapIdForSyncing() {
-        return "spawners";
-    }
-
 
 }

@@ -1,2 +1,2 @@
-v.1.4.3
-fix perma on cd bug
+v.1.5.2
+- removed dependency on my library, not needed currently
