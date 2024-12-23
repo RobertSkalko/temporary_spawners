@@ -1,2 +1,2 @@
-v.1.5.2
-- removed dependency on my library, not needed currently
+v.1.5.3
+- fix crash
